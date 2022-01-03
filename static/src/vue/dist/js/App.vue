@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello django + vue</h1>
+  <h1>Hello vue</h1>
 </template>
 
 <script>
