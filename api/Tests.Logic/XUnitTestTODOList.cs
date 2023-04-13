@@ -13,7 +13,7 @@ using DataLayer;
 
 public class XUnitTestTODOList
 {
-    // TODO Test Show TODO List
+    // Test Show TODO List
     [Fact]
     public void ShowTODOList() {
         // Arrange
