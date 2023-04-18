@@ -21,5 +21,22 @@ namespace DataLayer
                 return new List<TodoTask>();
             }
         }
+
+        public TodoTask AddTask(string tname, string tdesc) {
+            List<TodoTask> todoDB;
+            if(File.Exists("TODOListDatabase.json")) {
+                todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+            } else {
+                todoDB = new List<TodoTask>();
+            }
+
+            TodoTask task = new TodoTask(todoDB.Count() + 1, tname, tdesc, false);
+            todoDB.Add(task);
+
+            string serializedDb = JsonSerializer.Serialize(todoDB);
+            File.WriteAllText("TODOListDatabase.json", serializedDb);
+
+            return task;
+        }
     }
 }

@@ -17,5 +17,9 @@ namespace LogicLayer
         public List<TodoTask> GetTodoList() {
             return this._iTodoListData.GetTodoList();
         }
+
+        public TodoTask AddTask(string tname, string tdesc) {
+            return this._iTodoListData.AddTask(tname, tdesc);
+        }
     }
 }
