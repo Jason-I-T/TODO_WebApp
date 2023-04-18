@@ -23,5 +23,12 @@ namespace ApiLayer.Controllers
             List<TodoTask> TODOList = _iTodoListService.GetTodoList();
             return StatusCode(200, TODOList);
         }
+
+        [HttpPost("AddTask")]
+        public ActionResult<TodoTask> AddTask(TodoTask t) {
+            TodoTask task = new TodoTask();
+            task = _iTodoListService.AddTask(t.taskName!, t.taskDesc!);
+            return StatusCode(201, task);
+        }
     }
 }

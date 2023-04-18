@@ -11,5 +11,6 @@ namespace DataLayer
     public interface ITodoListData
     {
         public List<TodoTask> GetTodoList();
+        public TodoTask AddTask(string tname, string tdesc);
     }
 }
