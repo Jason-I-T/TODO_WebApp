@@ -30,5 +30,12 @@ namespace ApiLayer.Controllers
             task = _iTodoListService.AddTask(t.taskName!, t.taskDesc!);
             return StatusCode(201, task);
         }
+
+        [HttpDelete("DeleteTask")]
+        public ActionResult<TodoTask> DeleteTask(TodoTask t) {
+            TodoTask task = new TodoTask();
+            task = _iTodoListService.DeleteTask(t.taskId);
+            return StatusCode(200, task);
+        }
     }
 }
