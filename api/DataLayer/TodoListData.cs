@@ -11,9 +11,6 @@ namespace DataLayer
 {
     public class TodoListData : ITodoListData
     {
-        
-        /* Deserialize JSON (database) to List object, return the list.
-        If no JSON (database) to deserialize, return empty list.*/
         public List<TodoTask> GetTodoList() {
             if(File.Exists("TODOListDatabase.json")) { // This file is located in the API layer
                 return JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
@@ -30,13 +27,31 @@ namespace DataLayer
                 todoDB = new List<TodoTask>();
             }
 
-            TodoTask task = new TodoTask(todoDB.Count() + 1, tname, tdesc, false);
+            TodoTask task = new TodoTask(Guid.NewGuid(), tname, tdesc, false);
             todoDB.Add(task);
 
             string serializedDb = JsonSerializer.Serialize(todoDB);
             File.WriteAllText("TODOListDatabase.json", serializedDb);
 
             return task;
+        }
+
+        public TodoTask DeleteTask(Guid tid) {
+            if(!File.Exists("TODOListDatabase.json")) {
+                return new TodoTask();
+            }
+
+            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+            foreach(TodoTask task in todoDB) {
+                if(task.taskId.Equals(tid)) {
+                    todoDB.Remove(task);
+                    string serializedDb = JsonSerializer.Serialize(todoDB);
+                    File.WriteAllText("TODOListDatabase.json", serializedDb);
+                    return task;
+                }
+            }
+            
+            return new TodoTask();
         }
     }
 }
