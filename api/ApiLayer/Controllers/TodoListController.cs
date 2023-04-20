@@ -37,5 +37,19 @@ namespace ApiLayer.Controllers
             task = _iTodoListService.DeleteTask(t.taskId);
             return StatusCode(200, task);
         }
+
+        [HttpPut("UpdateTaskComplete")]
+        public ActionResult<TodoTask> UpdateTaskComplete(TodoTask t) {
+            TodoTask task = new TodoTask();
+            task = _iTodoListService.UpdateTaskComplete(t.taskId);
+            return StatusCode(200, task);
+        }
+
+        [HttpPut("UpdateTaskIncomplete")]
+        public ActionResult<TodoTask> UpdateTaskIncomplete(TodoTask t) {
+            TodoTask task = new TodoTask();
+            task = _iTodoListService.UpdateTaskIncomplete(t.taskId);
+            return StatusCode(200, task);
+        }
     }
 }

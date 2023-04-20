@@ -13,5 +13,7 @@ namespace LogicLayer
         public List<TodoTask> GetTodoList();
         public TodoTask AddTask(string tname, string tdesc);
         public TodoTask DeleteTask(Guid tid);
+        public TodoTask UpdateTaskComplete(Guid tid);
+        public TodoTask UpdateTaskIncomplete(Guid tid);
     }
 }

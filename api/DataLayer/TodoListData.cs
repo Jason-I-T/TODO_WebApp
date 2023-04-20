@@ -53,5 +53,23 @@ namespace DataLayer
             
             return new TodoTask();
         }
+
+        public TodoTask UpdateTask(Guid tid, bool tstatus) {
+            if(!File.Exists("TodoListDatabase.json")) {
+                return new TodoTask();
+            }
+
+            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+            foreach(TodoTask task in todoDB) {
+                if(task.taskId.Equals(tid)) {
+                    task.taskStatus = tstatus;
+                    string serializedDb = JsonSerializer.Serialize(todoDB);
+                    File.WriteAllText("TODOListDatabase.json", serializedDb);
+                    return task;
+                }
+            }
+
+            return new TodoTask();
+        }
     }
 }

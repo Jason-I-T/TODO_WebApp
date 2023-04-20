@@ -25,5 +25,13 @@ namespace LogicLayer
         public TodoTask DeleteTask(Guid tid) {
             return this._iTodoListData.DeleteTask(tid);
         }
+
+        public TodoTask UpdateTaskComplete(Guid tid) {
+            return this._iTodoListData.UpdateTask(tid, true);
+        }
+
+        public TodoTask UpdateTaskIncomplete(Guid tid) {
+            return this._iTodoListData.UpdateTask(tid, false);
+        }
     }
 }
