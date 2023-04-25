@@ -16,6 +16,18 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        var angularCORSPolicy = "AllowAngularFE";
+        builder.Services.AddCors(options => {
+            options.AddPolicy(name: angularCORSPolicy,
+                policy => {
+                    policy.WithOrigins("https://localhost:7059")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+                }
+            );
+        });
+
         // Adding Scoped Services
         builder.Services.AddScoped<ITodoListService, TodoListService>();
         builder.Services.AddScoped<ITodoListData, TodoListData>();
@@ -33,6 +45,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCors(angularCORSPolicy);
 
         app.MapControllers();
 
