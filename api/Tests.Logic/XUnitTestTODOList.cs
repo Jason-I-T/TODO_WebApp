@@ -15,12 +15,12 @@ public class XUnitTestTODOList
 {
     // Test Show TODO List
     [Fact]
-    public void ShowTODOList() {
+    public async void ShowTODOList() {
         // Arrange
         ITodoListData iTodoData = new TodoListData();
         
         // Act
-        List<TodoTask> dbTasks = iTodoData.GetTodoList(); 
+        List<TodoTask> dbTasks = await iTodoData.GetTodoList(); 
 
         // Assert
         Assert.True(dbTasks is not null);
