@@ -11,7 +11,7 @@ namespace LogicLayer
     public interface ITodoListService
     {
         public Task<List<TodoTask>> GetTodoList();
-        public TodoTask AddTask(string tname, string tdesc);
+        public Task<TodoTask> AddTask(string tname, string tdesc);
         public TodoTask DeleteTask(Guid tid);
         public TodoTask UpdateTaskComplete(Guid tid);
         public TodoTask UpdateTaskIncomplete(Guid tid);

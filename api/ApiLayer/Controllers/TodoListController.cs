@@ -18,20 +18,21 @@ namespace ApiLayer.Controllers
         private readonly ITodoListService _iTodoListService;
         public TodoListController(ITodoListService iTodoListService) => this._iTodoListService = iTodoListService;
 
-        // TODO Change to async (?)
         [HttpGet("ShowTODOList")]
         public async Task<ActionResult<List<TodoTask>>> ShowTODOList() {
             List<TodoTask> TODOList = await _iTodoListService.GetTodoList();
             return StatusCode(200, TODOList);
         }
 
+        // TODO Change to async
         [HttpPost("AddTask")]
-        public ActionResult<TodoTask> AddTask(TodoTask t) {
+        public async Task<ActionResult<TodoTask>> AddTask(TodoTask t) {
             TodoTask task = new TodoTask();
-            task = _iTodoListService.AddTask(t.taskName!, t.taskDesc!);
+            task = await _iTodoListService.AddTask(t.taskName!, t.taskDesc!);
             return StatusCode(201, task);
         }
 
+        // TODO Change to async
         [HttpDelete("DeleteTask")]
         public ActionResult<TodoTask> DeleteTask(TodoTask t) {
             TodoTask task = new TodoTask();
@@ -39,6 +40,7 @@ namespace ApiLayer.Controllers
             return StatusCode(200, task);
         }
 
+        // TODO Change to async
         [HttpPut("UpdateTaskComplete")]
         public ActionResult<TodoTask> UpdateTaskComplete(TodoTask t) {
             TodoTask task = new TodoTask();
@@ -46,6 +48,7 @@ namespace ApiLayer.Controllers
             return StatusCode(200, task);
         }
 
+        // TODO Change to async
         [HttpPut("UpdateTaskIncomplete")]
         public ActionResult<TodoTask> UpdateTaskIncomplete(TodoTask t) {
             TodoTask task = new TodoTask();
