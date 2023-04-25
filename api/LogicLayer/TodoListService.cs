@@ -14,8 +14,8 @@ namespace LogicLayer
         private readonly ITodoListData _iTodoListData;
         public TodoListService(ITodoListData iTodoListData) => this._iTodoListData = iTodoListData;
 
-        public List<TodoTask> GetTodoList() {
-            return this._iTodoListData.GetTodoList();
+        public async Task<List<TodoTask>> GetTodoList() {
+            return await this._iTodoListData.GetTodoList();
         }
 
         public TodoTask AddTask(string tname, string tdesc) {
