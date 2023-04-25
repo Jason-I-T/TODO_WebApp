@@ -1,4 +1,10 @@
 <h3>Tasks</h3>
+<div>
+    <label for="new-task">New Task: </label>
+    <input id="new-task" #taskName />
+    <input id="new-task" #taskDesc />
+    <button type="button" class="add-button" (click)="add(taskName.value, taskDesc.value)"> + </button>
+</div>
 <ul class="todo-list-items">
     <li *ngFor="let t of tasks">
         <span class="task-name">{{t.taskName}} </span>
