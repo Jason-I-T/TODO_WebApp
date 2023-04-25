@@ -11,9 +11,11 @@ namespace DataLayer
 {
     public class TodoListData : ITodoListData
     {
-        public List<TodoTask> GetTodoList() {
+        public async Task<List<TodoTask>> GetTodoList() {
             if(File.Exists("TODOListDatabase.json")) { // This file is located in the API layer
-                return JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+                using FileStream openStream = File.OpenRead("TODOListDatabase.json");
+                List<TodoTask>? todoTasks = await JsonSerializer.DeserializeAsync<List<TodoTask>>(openStream);
+                return todoTasks!;
             } else {
                 return new List<TodoTask>();
             }

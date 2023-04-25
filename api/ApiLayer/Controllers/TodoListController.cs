@@ -18,9 +18,10 @@ namespace ApiLayer.Controllers
         private readonly ITodoListService _iTodoListService;
         public TodoListController(ITodoListService iTodoListService) => this._iTodoListService = iTodoListService;
 
+        // TODO Change to async (?)
         [HttpGet("ShowTODOList")]
-        public ActionResult<List<TodoTask>> ShowTODOList() {
-            List<TodoTask> TODOList = _iTodoListService.GetTodoList();
+        public async Task<ActionResult<List<TodoTask>>> ShowTODOList() {
+            List<TodoTask> TODOList = await _iTodoListService.GetTodoList();
             return StatusCode(200, TODOList);
         }
 
