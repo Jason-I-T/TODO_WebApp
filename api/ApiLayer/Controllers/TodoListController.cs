@@ -24,9 +24,8 @@ namespace ApiLayer.Controllers
             return StatusCode(200, TODOList);
         }
 
-        // TODO Change to async
         [HttpPost("AddTask")]
-        public async Task<ActionResult<TodoTask>> AddTask(TodoTask t) {
+        public async Task<ActionResult<TodoTask>> AddTask([FromBody] TodoTask t) {
             TodoTask task = new TodoTask();
             task = await _iTodoListService.AddTask(t.taskName!, t.taskDesc!);
             return StatusCode(201, task);

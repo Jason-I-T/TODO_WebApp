@@ -23,7 +23,8 @@ export class TodoListService {
 
   addTask(task: TodoTask): Observable<TodoTask> {
     const url = `${this.todoListUrl}/AddTask`;
-    console.log(task);
-    return this.http.post<TodoTask>(url, task, this.httpOptions);
+    const body = {taskName: task.taskName, taskDesc: task.taskDesc}
+    console.log(body);
+    return this.http.post<TodoTask>(url, body, this.httpOptions);
   } 
 }
