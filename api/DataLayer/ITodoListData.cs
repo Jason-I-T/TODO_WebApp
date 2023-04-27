@@ -12,7 +12,7 @@ namespace DataLayer
     {
         public Task<List<TodoTask>> GetTodoList();
         public Task<TodoTask> AddTask(string tname, string tdesc);
-        public TodoTask DeleteTask(Guid tid);
+        public Task<TodoTask> DeleteTask(Guid tid);
         public TodoTask UpdateTask(Guid tid, bool tstatus);
     }
 }

@@ -33,9 +33,9 @@ namespace ApiLayer.Controllers
 
         // TODO Change to async
         [HttpDelete("DeleteTask")]
-        public ActionResult<TodoTask> DeleteTask(TodoTask t) {
+        public async Task<ActionResult<TodoTask>> DeleteTask([FromBody] TodoTask t) {
             TodoTask task = new TodoTask();
-            task = _iTodoListService.DeleteTask(t.taskId);
+            task = await _iTodoListService.DeleteTask(t.taskId);
             return StatusCode(200, task);
         }
 
