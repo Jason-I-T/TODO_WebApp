@@ -31,7 +31,6 @@ namespace ApiLayer.Controllers
             return StatusCode(201, task);
         }
 
-        // TODO Change to async
         [HttpDelete("DeleteTask")]
         public async Task<ActionResult<TodoTask>> DeleteTask([FromBody] TodoTask t) {
             TodoTask task = new TodoTask();
