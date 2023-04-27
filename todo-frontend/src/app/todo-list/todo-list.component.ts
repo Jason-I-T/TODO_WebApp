@@ -35,4 +35,14 @@ export class TodoListComponent implements OnInit {
     this.tasks = this.tasks.filter(_ => _ !== task);
     this.todoListService.deleteTask(task).subscribe();
   }
+
+  update(task: TodoTask): void {
+    if(task.taskStatus === false) {
+      this.todoListService.updateTaskComplete(task)
+      .subscribe(() => this.showTodoList()); // Refresh after updating...
+    } else {
+      this.todoListService.updateTaskIncomplete(task)
+      .subscribe(() => this.showTodoList());
+    }
+  }
 }
