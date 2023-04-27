@@ -30,4 +30,9 @@ export class TodoListComponent implements OnInit {
       this.tasks.push(_);
     });
   }
+
+  delete(task: TodoTask): void {
+    this.tasks = this.tasks.filter(_ => _ !== task);
+    this.todoListService.deleteTask(task).subscribe();
+  }
 }

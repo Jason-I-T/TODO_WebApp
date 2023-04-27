@@ -9,6 +9,7 @@
     <li *ngFor="let t of tasks">
         <span class="task-name">{{t.taskName}} </span>
         <span class="task-description">{{t.taskDesc}} </span>
-        <span class="task-status">{{t.taskStatus}}</span>
+        <span class="task-status">{{t.taskStatus}} </span>
+        <button type="button" class="delete-button" (click)="delete(t)"> x </button>
     </li>
 </ul>
