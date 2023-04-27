@@ -26,5 +26,11 @@ export class TodoListService {
     const body = {taskName: task.taskName, taskDesc: task.taskDesc}
     console.log(body);
     return this.http.post<TodoTask>(url, body, this.httpOptions);
-  } 
+  }
+
+  deleteTask(task: TodoTask): Observable<TodoTask> {
+    const url = `${this.todoListUrl}/DeleteTask`;
+    const body = { taskId: task.taskId }
+    return this.http.delete<TodoTask>(url, {body: body});
+  }
 }
