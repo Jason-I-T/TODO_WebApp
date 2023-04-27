@@ -13,6 +13,6 @@ namespace DataLayer
         public Task<List<TodoTask>> GetTodoList();
         public Task<TodoTask> AddTask(string tname, string tdesc);
         public Task<TodoTask> DeleteTask(Guid tid);
-        public TodoTask UpdateTask(Guid tid, bool tstatus);
+        public Task<TodoTask> UpdateTask(Guid tid, bool tstatus);
     }
 }

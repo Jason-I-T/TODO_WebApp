@@ -62,17 +62,20 @@ namespace DataLayer
             return new TodoTask();
         }
 
-        public TodoTask UpdateTask(Guid tid, bool tstatus) {
+        public async Task<TodoTask> UpdateTask(Guid tid, bool tstatus) {
             if(!File.Exists(jsonDb)) {
                 return new TodoTask();
             }
 
-            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText(jsonDb))!;
-            foreach(TodoTask task in todoDB) {
+            using FileStream openStream = File.OpenRead(jsonDb);
+            List<TodoTask>? todoDB = await JsonSerializer.DeserializeAsync<List<TodoTask>>(openStream);
+            openStream.Close();
+            foreach(TodoTask task in todoDB!) {
                 if(task.taskId.Equals(tid)) {
                     task.taskStatus = tstatus;
-                    string serializedDb = JsonSerializer.Serialize(todoDB);
-                    File.WriteAllText(jsonDb, serializedDb);
+                    using FileStream createStream = File.Create(jsonDb);
+                    await JsonSerializer.SerializeAsync(createStream, todoDB);
+                    await createStream.DisposeAsync();
                     return task;
                 }
             }

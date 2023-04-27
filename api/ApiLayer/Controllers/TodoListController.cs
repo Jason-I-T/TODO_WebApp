@@ -38,19 +38,17 @@ namespace ApiLayer.Controllers
             return StatusCode(200, task);
         }
 
-        // TODO Change to async
         [HttpPut("UpdateTaskComplete")]
-        public ActionResult<TodoTask> UpdateTaskComplete(TodoTask t) {
+        public async Task<ActionResult<TodoTask>> UpdateTaskComplete([FromBody] TodoTask t) {
             TodoTask task = new TodoTask();
-            task = _iTodoListService.UpdateTaskComplete(t.taskId);
+            task = await _iTodoListService.UpdateTaskComplete(t.taskId);
             return StatusCode(200, task);
         }
 
-        // TODO Change to async
         [HttpPut("UpdateTaskIncomplete")]
-        public ActionResult<TodoTask> UpdateTaskIncomplete(TodoTask t) {
+        public async Task<ActionResult<TodoTask>> UpdateTaskIncomplete([FromBody] TodoTask t) {
             TodoTask task = new TodoTask();
-            task = _iTodoListService.UpdateTaskIncomplete(t.taskId);
+            task = await _iTodoListService.UpdateTaskIncomplete(t.taskId);
             return StatusCode(200, task);
         }
     }
