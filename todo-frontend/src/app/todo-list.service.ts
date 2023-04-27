@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from './task';
+import { TodoTask } from './task';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
 
@@ -16,8 +16,15 @@ export class TodoListService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  getTodoList(): Observable<Task[]> {
+  getTodoList(): Observable<TodoTask[]> {
     const url = `${this.todoListUrl}/ShowTODOList`;
-    return this.http.get<Task[]>(url);
+    return this.http.get<TodoTask[]>(url);
   }
+
+  addTask(task: TodoTask): Observable<TodoTask> {
+    const url = `${this.todoListUrl}/AddTask`;
+    const body = {taskName: task.taskName, taskDesc: task.taskDesc}
+    console.log(body);
+    return this.http.post<TodoTask>(url, body, this.httpOptions);
+  } 
 }

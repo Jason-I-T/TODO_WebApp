@@ -11,9 +11,10 @@ namespace DataLayer
 {
     public class TodoListData : ITodoListData
     {
+        private string jsonDb = "TODOListDatabase.json";
         public async Task<List<TodoTask>> GetTodoList() {
-            if(File.Exists("TODOListDatabase.json")) { // This file is located in the API layer
-                using FileStream openStream = File.OpenRead("TODOListDatabase.json");
+            if(File.Exists(jsonDb)) { // This file is located in the API layer
+                using FileStream openStream = File.OpenRead(jsonDb);
                 List<TodoTask>? todoTasks = await JsonSerializer.DeserializeAsync<List<TodoTask>>(openStream);
                 return todoTasks!;
             } else {
@@ -21,34 +22,36 @@ namespace DataLayer
             }
         }
 
-        public TodoTask AddTask(string tname, string tdesc) {
-            List<TodoTask> todoDB;
-            if(File.Exists("TODOListDatabase.json")) {
-                todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+        public async Task<TodoTask> AddTask(string tname, string tdesc) {
+            List<TodoTask>? todoDB;
+            if(File.Exists(jsonDb)) {
+                using FileStream openStream = File.OpenRead(jsonDb);
+                todoDB = await JsonSerializer.DeserializeAsync<List<TodoTask>>(openStream);
             } else {
                 todoDB = new List<TodoTask>();
             }
 
             TodoTask task = new TodoTask(Guid.NewGuid(), tname, tdesc, false);
-            todoDB.Add(task);
+            todoDB?.Add(task);
 
-            string serializedDb = JsonSerializer.Serialize(todoDB);
-            File.WriteAllText("TODOListDatabase.json", serializedDb);
+            using FileStream createStream = File.Create(jsonDb);
+            await JsonSerializer.SerializeAsync(createStream, todoDB);
+            await createStream.DisposeAsync();
 
             return task;
         }
 
         public TodoTask DeleteTask(Guid tid) {
-            if(!File.Exists("TODOListDatabase.json")) {
+            if(!File.Exists(jsonDb)) {
                 return new TodoTask();
             }
 
-            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText(jsonDb))!;
             foreach(TodoTask task in todoDB) {
                 if(task.taskId.Equals(tid)) {
                     todoDB.Remove(task);
                     string serializedDb = JsonSerializer.Serialize(todoDB);
-                    File.WriteAllText("TODOListDatabase.json", serializedDb);
+                    File.WriteAllText(jsonDb, serializedDb);
                     return task;
                 }
             }
@@ -57,16 +60,16 @@ namespace DataLayer
         }
 
         public TodoTask UpdateTask(Guid tid, bool tstatus) {
-            if(!File.Exists("TodoListDatabase.json")) {
+            if(!File.Exists(jsonDb)) {
                 return new TodoTask();
             }
 
-            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText("TODOListDatabase.json"))!;
+            List<TodoTask> todoDB = JsonSerializer.Deserialize<List<TodoTask>>(File.ReadAllText(jsonDb))!;
             foreach(TodoTask task in todoDB) {
                 if(task.taskId.Equals(tid)) {
                     task.taskStatus = tstatus;
                     string serializedDb = JsonSerializer.Serialize(todoDB);
-                    File.WriteAllText("TODOListDatabase.json", serializedDb);
+                    File.WriteAllText(jsonDb, serializedDb);
                     return task;
                 }
             }

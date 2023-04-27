@@ -18,8 +18,8 @@ namespace LogicLayer
             return await this._iTodoListData.GetTodoList();
         }
 
-        public TodoTask AddTask(string tname, string tdesc) {
-            return this._iTodoListData.AddTask(tname, tdesc);
+        public async Task<TodoTask> AddTask(string tname, string tdesc) {
+            return await this._iTodoListData.AddTask(tname, tdesc);
         }
 
         public TodoTask DeleteTask(Guid tid) {
